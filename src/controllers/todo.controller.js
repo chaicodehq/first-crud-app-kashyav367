@@ -117,14 +117,17 @@ export async function toggleTodo(req, res, next) {
  */
 export async function deleteTodo(req, res, next) {
   try {
-    // Your code here
-    const todo = await Todo.findByIDAndDelete(req.params.id)
-    if(!todo){
-    return res.status(404).json( {
-      error : { message : "error not found"}
-    })
-    } 
-    return res.status(204).send()
+    const todo = await Todo.findByIdAndDelete(req.params.id);
+
+    if (!todo) {
+      return res.status(404).json({
+        error: { message: "Todo not found" }
+      });
+    }
+
+    return res.status(200).json({
+      data: todo
+    });
 
   } catch (error) {
     next(error);
