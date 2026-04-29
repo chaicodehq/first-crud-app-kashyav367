@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
-// import { MongoMemoryServer } from "mongodb-memory-server";
+import { MongoMemoryServer } from "mongodb-memory-server";
 import { connectDB } from "../../src/db/connect.js";
-
 
 describe("Database Connection", () => {
   let mongo;
@@ -17,9 +16,8 @@ describe("Database Connection", () => {
   });
 
   test("connectDB establishes connection successfully", async () => {
-    // mongo = await MongoMemoryServer.create();
-    // const uri = mongo.getUri();
-      const uri = "mongodb://localhost:27017/todo_api_lab"
+    mongo = await MongoMemoryServer.create();
+    const uri = mongo.getUri();
 
     const conn = await connectDB(uri);
 

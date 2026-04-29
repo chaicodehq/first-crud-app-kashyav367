@@ -1,12 +1,14 @@
 import { createApp } from "./app.js";
 import { connectDB } from "./db/connect.js";
+import dotenv from "dotenv";
+dotenv.config();
 
 async function start() {
   // TODO: Read PORT from process.env, default to 3000
-  const port = parseInt(process.env.PORT) || 3000
+  const port = parseInt(process.env.PORT, 10) || 3000;
 
   // TODO: Read MONGO_URI from process.env, default to "mongodb://localhost:27017/todo_api_lab"
-  const uri = process.env.MONGO_URI
+  const uri = process.env.MONGO_URI || "mongodb://localhost:27017/todo_api_lab";
 
   await connectDB(uri);
 

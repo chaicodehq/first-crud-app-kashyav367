@@ -1,4 +1,3 @@
-import "dotenv/config"
 import mongoose from "mongoose";
 
 /**
@@ -8,11 +7,8 @@ import mongoose from "mongoose";
  * 2. Connect using mongoose.connect(uri)
  * 3. Return mongoose.connection
  */
-export const connectDB = async (uri) => {
-  if (!uri || uri.trim() === "") {
-    throw new Error("MongoDB URI is required");
-  }
-
+export async function connectDB(uri) {
+  if (!uri) throw Error("MongoDB URI is required");
   const conn = await mongoose.connect(uri);
   return conn.connection;
-};
+}

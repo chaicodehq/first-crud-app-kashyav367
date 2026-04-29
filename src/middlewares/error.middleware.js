@@ -8,30 +8,16 @@
  * 2. Mongoose CastError → 400 with "Invalid id format"
  * 3. Other errors → Use err.status (or 500) and err.message
  */
-  
-  export function errorHandler(err, req, res, next) {
+export function errorHandler(err, req, res, next) {
+  let statusCode = err.status ?? 500;
+  let message = err.message;
 
   if (err.name === "ValidationError") {
-    const messages = Object.values(err.errors)
-      .map(e => e.message)
-      .join(", ");
-
-    return res.status(400).json({
-      error: { message: messages }
-    });
+    statusCode = 400;
+    message = err.message;
+  } else if (err.name === "CastError") {
+    statusCode = 400;
+    message = "Invalid id format";
   }
-
-  
-  if (err.name === "CastError") {
-    return res.status(400).json({
-      error: { message: "Invalid id format" }
-    });
-  }
-
-  
-  const status = err.status || 500;
-
-  return res.status(status).json({
-    error: { message: err.message || "Internal Server Error" }
-  });
+  return res.status(statusCode).json({ error: { message } });
 }
