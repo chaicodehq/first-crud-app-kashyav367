@@ -8,13 +8,11 @@ import mongoose from "mongoose";
  * 2. Connect using mongoose.connect(uri)
  * 3. Return mongoose.connection
  */
-export async function connectDB(uri) {
-  // Your code here
-  if(!uri){
-    throw new Error("MongoDB URI is required")
+export const connectDB = async (uri) => {
+  if (!uri || uri.trim() === "") {
+    throw new Error("MongoDB URI is required");
   }
-  const conn = await mongoose.connect(process.env.MONGO_URI);
-  
-  return conn.connection;
-}
 
+  const conn = await mongoose.connect(uri);
+  return conn.connection;
+};
