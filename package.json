@@ -8,7 +8,7 @@
     "dev": "node --watch src/server.js",
     "start": "node src/server.js",
     "test": "NODE_OPTIONS=--experimental-vm-modules jest --runInBand",
-    "test:win": "set NODE_OPTIONS=--experimental-vm-modules&& jest --runInBand"
+    "test:win": "set NODE_OPTIONS=--experimental-vm-modules && jest --runInBand"
   },
   "keywords": [
     "express",
@@ -21,6 +21,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^17.4.2",
     "express": "^4.19.2",
     "mongoose": "^8.8.0"
   },

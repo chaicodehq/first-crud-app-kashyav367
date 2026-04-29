@@ -2,9 +2,9 @@ export default {
   testEnvironment: "node",
   testMatch: ["**/tests/**/*.spec.js"],
   verbose: true,
-  transform: {}, // Disable babel, use native ESM
+  transform: {}, 
   collectCoverageFrom: [
     "src/**/*.js",
-    "!src/server.js" // Exclude server startup file from coverage
+    "!src/server.js" 
   ]
 };
