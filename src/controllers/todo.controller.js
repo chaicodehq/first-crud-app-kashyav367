@@ -1,5 +1,5 @@
 import { Todo } from "../models/todo.model.js";
-
+import mongoose from "mongoose";
 /**
  * TODO: Create a new todo
  * - Extract data from req.body
@@ -41,12 +41,12 @@ export const listTodos = async (req, res) => {
     query.title = { $regex: search, $options: "i" };
   }
 
-  const skip = (page - 1) * limit;
+  const skip = (Number(page) - 1) * Number(limit);
 
   const total = await Todo.countDocuments(query);
 
   const todos = await Todo.find(query)
-    .sort({ createdAt: -1 })
+    .sort({ createdAt: -1 }) // ✅ newest first
     .skip(skip)
     .limit(Number(limit));
 
