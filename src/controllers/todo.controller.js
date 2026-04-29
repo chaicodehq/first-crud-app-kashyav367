@@ -24,11 +24,10 @@ export async function createTodo(req, res, next) {
  * - Default: page=1, limit=10
  * - Return: { data: [...], meta: { total, page, limit, pages } }
  */
-export const getTodos = async (req, res) => {
+export const listTodos = async (req, res) => {
   const { page = 1, limit = 10, completed, priority, search } = req.query;
 
   const query = {};
-
 
   if (completed !== undefined) {
     query.completed = completed === "true";
@@ -38,7 +37,6 @@ export const getTodos = async (req, res) => {
     query.priority = priority;
   }
 
-  
   if (search) {
     query.title = { $regex: search, $options: "i" };
   }
@@ -48,7 +46,7 @@ export const getTodos = async (req, res) => {
   const total = await Todo.countDocuments(query);
 
   const todos = await Todo.find(query)
-    .sort({ createdAt: -1 }) // newest first
+    .sort({ createdAt: -1 })
     .skip(skip)
     .limit(Number(limit));
 
@@ -63,11 +61,12 @@ export const getTodos = async (req, res) => {
   });
 };
 
+
 /**
  * TODO: Get single todo by ID
  * - Return 404 if not found
  */
-export const getTodoById = async (req, res) => {
+export const getTodo = async (req, res) => {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -78,13 +77,12 @@ export const getTodoById = async (req, res) => {
 
   if (!todo) {
     return res.status(404).json({
-      error: { message: "Todo not found" }
+      error: { message: "Todo not found" },
     });
   }
 
   res.status(200).json(todo);
 };
-
 /**
  * TODO: Update todo by ID
  * - Use findByIdAndUpdate with { new: true, runValidators: true }
